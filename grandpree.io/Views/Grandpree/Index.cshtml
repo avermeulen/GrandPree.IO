@@ -1,0 +1,148 @@
+﻿@model grandpree.io.Controllers.Prediction
+
+@{
+    Layout = null;
+}
+
+<!DOCTYPE html>
+
+<html>
+    <head>
+        <title>title</title>
+        <script src="../../Scripts/knockout-2.2.1.js"></script>
+        <script src="../../Scripts/jquery-2.0.0.intellisense.js"></script>
+        <script src="../../Scripts/jquery-2.0.0.js"></script>
+    </head>
+    <body>
+        
+        <select data-bind="options: users, optionsText:'Name', optionsValue:'Id', value: selectedUser"></select>
+        <select data-bind="options: races, optionsText:'Name', optionsValue:'Id', value: selectedRace"></select>
+        
+        <ul id="races" data-bind="foreach: predictions">
+            <li>
+                <select data-bind="options: $parent.drivers, optionsText:'Name',  optionsValue:'Id', value: DriverId, optionsCaption: 'Choose...'"></select>
+                <input type="text" data-bind="value: Grid"/>
+                <input type="text" data-bind="value: Retire"/>
+                <input type="text" data-bind="value: Podium"/>
+                <a href="#" data-bind="click:$parent.removePrediction" >Remove</a>
+            </li>
+        </ul>
+        
+        <button data-bind="click: addPrediction">Add</button>
+        <button data-bind="click: submit">Submit</button>
+    </body>
+    <script type="text/javascript">
+
+        ko.numericObservable = function (initialValue) {
+            var _actual = ko.observable(initialValue);
+
+            var result = ko.dependentObservable({
+                read: function () {
+                    return _actual();
+                },
+                write: function (newValue) {
+                    var parsedValue = parseFloat(newValue);
+                    _actual(isNaN(parsedValue) ? newValue : parsedValue);
+                }
+            });
+
+            return result;
+        };
+
+        var gp = gp || {};
+
+        gp.Prediction = function () {
+            var self = this;
+            self.DriverId = ko.observable();
+            self.Grid = ko.numericObservable();
+            self.Retire = ko.numericObservable();
+            self.Podium = ko.numericObservable();
+            self.total = ko.computed(function() {
+                return parseInt(self.Grid() || 0) + parseInt(self.Podium() || 0) + parseInt(self.Retire() || 0);
+            });
+        };
+
+        gp.PredictionViewModel = function(context) {
+
+            var self = this;
+
+            self.races = context.races;
+            self.drivers = context.drivers;
+            self.users = context.users;
+
+            self.modelStatus = ko.observable("new");
+            self.isDirty = ko.isComputed(function() {
+                return this.modelStatus() != "saved";
+            });
+
+            self.selectedUser = ko.observable();
+            self.selectedRace = ko.observable();
+            self.predictions = ko.observableArray([]);
+
+            self.addPrediction = function() {
+                this.predictions.push(new gp.Prediction());
+                this.modelStatus("dirty");
+            };
+
+            self.clearPredictions = function() {
+                this.predictions.removeAll();
+            };
+
+            self.removePrediction = function(prediction) {
+                this.predictions.remove(prediction);
+            };
+
+            self.submit = function() {
+                var pred = ko.toJS(gp.vm.predictions);
+
+                var d = {
+                    UserId: this.selectedUser(),
+                    RaceId: this.selectedRace(),
+                    Predictions: pred
+                };
+
+                $.post("/api/predictions", d);
+                this.modelStatus("saved");
+            };
+            
+            self.selectedRace().subscribe(function (newValue) {
+                if (gp.vm.isDirty) {
+                    gp.vm.submit();
+                }
+
+                gp.vm.clearPredictions();
+                gp.vm.modelStatus("new");
+            });
+
+        };
+
+        /**    
+        gp.SetContext = function(context) {
+
+          
+            gp.vm = function() {
+
+                gp.vm.selectedRace.subscribe(function(newValue) {
+                    if (gp.vm.isDirty) {
+                        gp.vm.submit();
+                    }
+
+                    gp.vm.clearPredictions();
+                    gp.vm.modelStatus("new");
+                });
+
+            };
+        };
+        **/
+        
+        $(function() {
+
+                $.get("./context", function(data) {
+                    
+                    ko.applyBindings(new gp.PredictionViewModel(data));
+                });
+
+            });
+
+    </script>
+</html>

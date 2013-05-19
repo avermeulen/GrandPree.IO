@@ -1,0 +1,27 @@
+﻿Group A
+S. Vettel
+Group B	
+J. Button
+L. Hamilton	 	    	 
+F. Alonso
+K. Raikkonen	 	    	 
+Group C
+F. Massa
+R. Grosjean
+N. Rosberg
+M. Webber
+S. Perez	 	   	 
+Group D
+A. Sutil
+P. di Resta
+N. Hulkenberg
+J-E. Vergne
+Group D
+E. Gutierrez
+V. Bottas
+P. Maldonaldo
+D. Ricciardo
+G. VD Garde
+J. Bianchi  	 
+C. Pic 
+M. Chiltern
