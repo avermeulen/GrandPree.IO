@@ -169,7 +169,7 @@
             </summary>
             <param name="key">The key.</param>
         </member>
-        <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.GetAsync(System.String[],System.String[],System.Boolean)">
+        <member name="M:Raven.Client.Connection.Async.IAsyncDatabaseCommands.GetAsync(System.String[],System.String[],System.String,System.Collections.Generic.Dictionary{System.String,Raven.Json.Linq.RavenJToken},System.Boolean)">
             <summary>
             Begins an async multi get operation
             </summary>
@@ -611,7 +611,7 @@
             <param name="key">The key.</param>
             <returns></returns>
         </member>
-        <member name="M:Raven.Client.Connection.Async.AsyncServerClient.GetAsync(System.String[],System.String[],System.Boolean)">
+        <member name="M:Raven.Client.Connection.Async.AsyncServerClient.GetAsync(System.String[],System.String[],System.String,System.Collections.Generic.Dictionary{System.String,Raven.Json.Linq.RavenJToken},System.Boolean)">
             <summary>
             Begins an async multi get operation
             </summary>

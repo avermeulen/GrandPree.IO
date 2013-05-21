@@ -24,20 +24,37 @@ namespace grandpree.io.Controllers
             return store;
         });
 
-
-        public Prediction PostPrediction(Prediction prediction)
+        public Prediction GetPredictionByUserNameAndRaceId(string userName, string raceId)
         {
-
-            var session = documentStore.Value.OpenSession();
-            if (!session.Query<Prediction>()
-                        .Any(p => p.RaceId == prediction.RaceId && prediction.UserId == p.UserId))
+            using (var session = documentStore.Value.OpenSession())
             {
-                session.Store(prediction);
+                    return session.Query<Prediction>().FirstOrDefault(p => 
+                            p.RaceId == raceId 
+                            && userName == p.UserId);
             }
 
-            session.SaveChanges();
+        }
 
-            return prediction;
+        public Prediction PostPrediction(Prediction predictionParam)
+        {
+
+            
+            var prediction = GetPredictionByUserNameAndRaceId(predictionParam.UserId, predictionParam.RaceId);
+
+            using (var session = documentStore.Value.OpenSession())
+            {
+                if (prediction == null)
+                {
+                    session.Store(predictionParam);
+                }
+                else
+                {
+                    session.Store(predictionParam, prediction.Id);
+                }
+                session.SaveChanges();
+            }
+
+            return predictionParam;
         } 
 
 

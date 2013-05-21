@@ -65,6 +65,7 @@ namespace grandpree.io.Controllers
 
     public class Prediction
     {
+        public string Id { get; set; }
         public string RaceId { get; set; }
         public string UserId { get; set; }
         public IEnumerable<PredictionLine> Predictions { get; set; }
