@@ -55,12 +55,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="DogOwnersUniteTransformer.cs" />
-    <Compile Include="DogsPerOwnerIndex.cs" />
-    <Compile Include="DogWithOwners.cs" />
-    <Compile Include="PetshopTests.cs" />
     <Compile Include="GandpreeTests.cs" />
-    <Compile Include="PetsPerOwnerIndex.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

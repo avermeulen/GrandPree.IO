@@ -14,3 +14,4 @@ C:\workspace\grandpree.io\Grandpree.Test\bin\Debug\Raven.Client.Lightweight.pdb
 C:\workspace\grandpree.io\Grandpree.Test\bin\Debug\Raven.Client.Lightweight.xml
 C:\workspace\grandpree.io\Grandpree.Test\obj\Debug\Grandpree.Test.dll
 C:\workspace\grandpree.io\Grandpree.Test\obj\Debug\Grandpree.Test.pdb
+C:\workspace\grandpree.io\Grandpree.Test\obj\Debug\Grandpree.Test.csprojResolveAssemblyReference.cache
